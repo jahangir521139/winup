@@ -1,0 +1,17 @@
+- name: Upgrade Windows 10 to 11 via SMB share
+  hosts: windows
+  gather_facts: false
+  tasks:
+    - name: Map SMB share (Z:) with credentials
+      win_command: >
+        net use Z: \\WINPC001\ios\Win11 /user:jahangir\jahangir Root@1234
+
+    - name: Start upgrade from mounted drive
+      win_command: Z:\setup.exe /auto upgrade /quiet /noreboot /dynamicupdate disable
+
+    - name: Reboot the system
+      win_reboot:
+        reboot_timeout: 3600
+
+    - name: Unmap SMB share
+      win_command: net use Z: /delete
