@@ -1,0 +1,19 @@
+- name: Upgrade Windows 10 to Windows 11
+  hosts: windows
+  gather_facts: false
+  tasks:
+
+    - name: Copy Windows 11 ISO or setup files
+      win_copy:
+        src: /isos/Win11
+        dest: C:\Temp\Win11
+
+    - name: Start silent upgrade
+      win_command: >
+        C:\Temp\Win11\setup.exe /auto upgrade /quiet /noreboot /dynamicupdate disable
+      args:
+        chdir: C:\Temp\Win11
+
+    - name: Reboot the system
+      win_reboot:
+        reboot_timeout: 3600
