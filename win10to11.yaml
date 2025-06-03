@@ -5,7 +5,7 @@
 
     - name: Copy Windows 11 ISO or setup files
       win_copy:
-        src: /isos/Win11
+        src: /WINPC001/ios/Win11
         dest: C:\Temp\Win11
 
     - name: Start silent upgrade
