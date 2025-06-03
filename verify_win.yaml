@@ -1,0 +1,10 @@
+- name: Verify Windows version
+  hosts: windows
+  tasks:
+    - name: Check Windows version
+      win_command: cmd /c ver
+      register: win_version
+
+    - name: Show version
+      debug:
+        var: win_version.stdout
