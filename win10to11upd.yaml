@@ -1,5 +1,5 @@
 - name: Upgrade Windows 10 to 11 via SMB share
-  hosts: windows
+  hosts: all
   gather_facts: false
   tasks:
     - name: Map SMB share (Z:) with credentials
