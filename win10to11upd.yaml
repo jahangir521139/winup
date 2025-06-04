@@ -4,12 +4,12 @@
   tasks:
     - name: Ensure destination directory exists
       win_file:
-        path: C:\ios\Win11
+        path: C:\ios\Win11.iso
         state: directory
 
 
     - name: Run Windows 11 upgrade silently
-      win_command: C:\ios\Win11\setup.exe /auto upgrade /quiet /noreboot /dynamicupdate disable
+      win_command: C:\ios\Win11.iso\setup.exe /auto upgrade /quiet /noreboot /dynamicupdate disable
 
     - name: Reboot for installation
       win_reboot:
