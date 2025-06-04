@@ -3,10 +3,13 @@
   gather_facts: false
   tasks:
 
-    - name: Copy Windows 11 ISO or setup files
-      win_copy:
-        src: C:\ios\Win11'
-        dest: C:\Temp\Win11
+#    - name: Copy Windows 11 ISO or setup files
+#     win_copy:
+ #       src: C:\ios\Win11'
+  #      dest: C:\Temp\Win11
+- name: Copy files from network share to local folder
+  win_shell: |
+    robocopy "\\172.23.18.207\ios\Win11" "C:\Temp\Win11" /E
 
     - name: Start silent upgrade
       win_command: >
