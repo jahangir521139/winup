@@ -1,20 +1,16 @@
-- name: Upgrade Windows 10 to 11 via SMB share
-  hosts: all
-  gather_facts: false
+- name: Upgrade Windows 10 to Windows 11
+  hosts: windows
+  gather_facts: no
   tasks:
-    - name: Unmap C: drive if it exists
-      win_command: net use C: /delete
-      ignore_errors: true
+    - name: Ensure destination directory exists
+      win_file:
+        path: C:\ios\Win11
+        state: directory
 
 
-    - name: Map SMB share (C:) with credentials
-      win_command: >
-        net use C: \\172.23.18.207\ios\Win11 /user:jahangir Root@1234
+    - name: Run Windows 11 upgrade silently
+      win_command: C:\ios\Win11\setup.exe /auto upgrade /quiet /noreboot /dynamicupdate disable
 
-    - name: Start upgrade from mounted drive
-      win_command: C:\setup.exe /auto upgrade /quiet /noreboot /dynamicupdate disable
-
-    - name: Reboot the system
+    - name: Reboot for installation
       win_reboot:
         reboot_timeout: 3600
-
