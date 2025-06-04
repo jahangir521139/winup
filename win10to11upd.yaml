@@ -2,15 +2,13 @@
   hosts: all
   gather_facts: no
   tasks:
-    - name: Ensure destination directory exists
-      win_file:
-        path: C:\ios\Win11.iso
-        state: directory
+    - name: Mount Windows 11 ISO
+      win_command: PowerShell Mount-DiskImage -ImagePath "C:\\ios\\Win11.iso"
 
+    - name: Run setup.exe from mounted ISO (assuming D:)
+      win_command: E:\setup.exe /auto upgrade /quiet /noreboot /dynamicupdate disable
 
-    - name: Run Windows 11 upgrade silently
-      win_command: C:\ios\Win11.iso\setup.exe /auto upgrade /quiet /noreboot /dynamicupdate disable
-
-    - name: Reboot for installation
-      win_reboot:
+      - name: Reboot after upgrade
+        win_reboot:
         reboot_timeout: 3600
+   
