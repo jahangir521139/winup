@@ -8,7 +8,7 @@
     - name: Run setup.exe from mounted ISO (assuming D:)
       win_command: E:\setup.exe /auto upgrade /quiet /noreboot /dynamicupdate disable
 
-      - name: Reboot after upgrade
-        win_reboot:
-        reboot_timeout: 3600
+    - name: Reboot after upgrade
+      win_reboot:
+      reboot_timeout: 3600
    
