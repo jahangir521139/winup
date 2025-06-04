@@ -2,7 +2,7 @@
   hosts: all
   gather_facts: false
   tasks:
-    - name: Map SMB share (Z:) with credentials
+    - name: Map SMB share (C:) with credentials
       win_command: >
         net use C: \\172.23.18.207\ios\Win11 /user:jahangir Root@1234
 
