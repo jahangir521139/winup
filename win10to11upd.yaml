@@ -10,5 +10,5 @@
 
     - name: Reboot after upgrade
       win_reboot:
-      reboot_timeout: 3600
+        reboot_timeout: 3600
    
