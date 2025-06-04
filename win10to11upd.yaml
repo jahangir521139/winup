@@ -1,5 +1,5 @@
 - name: Upgrade Windows 10 to Windows 11
-  hosts: windows
+  hosts: all
   gather_facts: no
   tasks:
     - name: Ensure destination directory exists
