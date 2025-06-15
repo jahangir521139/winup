@@ -1,14 +1,9 @@
 ---
-- name: Copy Windows 11 ISO and mount it
-  hosts: all
-  gather_facts: no
-  tasks:
-    - name: Copy ISO to target
-      win_copy:
-        src: /ios/Win11.iso
-        dest: C:\Temp\Win11.iso
-
-    - name: Mount ISO
-      win_shell: Mount-DiskImage -ImagePath "C:\Temp\Win11.iso"
-      args:
-        executable: powershell.exe
+- name: Verify WinRM service is running
+  host: all
+  win_service:
+    name: WinRM
+    state: started
+  register: winrm_service_result
+  failed_when: winrm_service_result.status != 'running'
+  changed_when: false
