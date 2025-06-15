@@ -1,16 +1,22 @@
-- name: Check TPM availability
-  win_shell: |
-    $tpm = Get-WmiObject -Namespace "Root\CIMv2\Security\MicrosoftTpm" -Class Win32_Tpm
-    if ($tpm -ne $null -and $tpm.IsActivated_InitialValue -eq $true) {
-      Write-Output "TPM is available and activated."
-    } else {
-      Write-Output "TPM is not available or not activated."
-    }
-
-- name: Check Secure Boot status
-  win_shell: |
-    if (Confirm-SecureBootUEFI) {
-      Write-Output "Secure Boot is enabled."
-    } else {
-      Write-Output "Secure Boot is NOT enabled."
-    }
+---
+- name: Upgrade Windows 10 to Windows 11
+  hosts: all
+  gather_facts: false
+  tasks:
+    
+    - name: Check TPM availability
+      win_shell: |
+        $tpm = Get-WmiObject -Namespace "Root\CIMv2\Security\MicrosoftTpm" -Class Win32_Tpm
+        if ($tpm -ne $null -and $tpm.IsActivated_InitialValue -eq $true) {
+          Write-Output "TPM is available and activated."
+        } else {
+          Write-Output "TPM is not available or not activated."
+        }
+    
+    - name: Check Secure Boot status
+      win_shell: |
+        if (Confirm-SecureBootUEFI) {
+          Write-Output "Secure Boot is enabled."
+        } else {
+          Write-Output "Secure Boot is NOT enabled."
+        }
