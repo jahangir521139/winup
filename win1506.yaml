@@ -1,6 +1,6 @@
 ---
 - name: Copy Windows 11 ISO and mount it
-  hosts: windows
+  hosts: all
   gather_facts: no
   tasks:
     - name: Copy ISO to target
