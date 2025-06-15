@@ -1,9 +1,17 @@
-- name: Fetch setup error log
-  win_copy:
-    src: 'C:\$WINDOWS.~BT\Sources\Panther\setuperr.log'
-    dest: '/tmp/{{ inventory_hostname }}-setuperr.log'
-
-- name: Fetch setup activity log
-  win_copy:
-    src: 'C:\$WINDOWS.~BT\Sources\Panther\setupact.log'
-    dest: '/tmp/{{ inventory_hostname }}-setupact.log'
+---
+- name: Upgrade Windows 10 to Windows 11
+  hosts: all
+  gather_facts: false
+  tasks:
+    
+    - name: Fetch setup error log
+      win_copy:
+        src: 'C:\$WINDOWS.~BT\Sources\Panther\setuperr.log'
+        dest: '/tmp/{{ inventory_hostname }}-setuperr.log'
+    
+    - name: Fetch setup activity log
+      win_copy:
+        src: 'C:\$WINDOWS.~BT\Sources\Panther\setupact.log'
+        dest: '/tmp/{{ inventory_hostname }}-setupact.log'
+    
+        }
