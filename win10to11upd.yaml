@@ -3,7 +3,7 @@
   gather_facts: no
   tasks:
     - name: Mount Windows 11 ISO
-      win_command: PowerShell Mount-DiskImage -ImagePath "C:\ios\Win11.iso"
+      win_command: PowerShell Mount-DiskImage -ImagePath "C:\\ios\\Win11.iso"
 
     - name: Run setup.exe from mounted ISO (assuming E:)
       win_command: E:\setup.exe /auto upgrade /quiet /noreboot /dynamicupdate disable
