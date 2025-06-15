@@ -7,6 +7,7 @@
         $vol = Get-Volume | Where-Object { $_.FileSystemLabel -eq "CCCOMA_X64FRE_EN-US_DV9" }  # adjust for your ISO label
         $vol.DriveLetter + ":"
       register: iso_drive
+      
     - name: Run setup.exe from mounted ISO (assuming E:)
       win_command: '{{ iso_drive.stdout }}\\setup.exe /auto upgrade /quiet /noreboot /compat IgnoreWarning'
 
