@@ -3,10 +3,12 @@
   gather_facts: no
   tasks:
     - name: Mount Windows 11 ISO
-      win_command: PowerShell Mount-DiskImage -ImagePath "C:\\ios\\Win11.iso"
-
+      win_shell: |
+        $vol = Get-Volume | Where-Object { $_.FileSystemLabel -eq "CCCOMA_X64FRE_EN-US_DV9" }  # adjust for your ISO label
+        $vol.DriveLetter + ":"
+      register: iso_drive
     - name: Run setup.exe from mounted ISO (assuming E:)
-      win_command: E:\setup.exe /auto upgrade /quiet /noreboot /dynamicupdate disable
+      win_command: '{{ iso_drive.stdout }}\\setup.exe /auto upgrade /quiet /noreboot /compat IgnoreWarning'
 
     - name: Reboot after upgrade
       win_reboot:
