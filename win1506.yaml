@@ -1,0 +1,22 @@
+- name: Upgrade Windows 10 to Windows 11
+  hosts: all
+  gather_facts: false
+  tasks:
+    
+    - name: Copy Windows 11 ISO to target
+      win_copy:
+        src: C:\ios\Win11.iso
+        dest: C:\ios\Win11.iso
+    
+    - name: Mount ISO on Windows
+      win_shell: |
+        Mount-DiskImage -ImagePath "C:\ios\Win11.iso"
+      args:
+        executable: powershell.exe
+    
+    - name: Run Windows 11 Setup from mounted ISO
+      win_shell: |
+        $drive = (Get-DiskImage -ImagePath "C:\ios\Win11.iso" | Get-Volume).DriveLetter
+        Start-Process "$($drive):\setup.exe" -ArgumentList "/auto upgrade /quiet /noreboot" -Wait
+      args:
+        executable: powershell.exe
