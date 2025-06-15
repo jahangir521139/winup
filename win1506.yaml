@@ -1,36 +1,36 @@
 ---
-- name: Upgrade Windows 10 to 11 using ISO at C:\ios
+---
+- name: Upgrade Windows 10 to 11 using local ISO (C:\ios)
   hosts: windows
   gather_facts: no
   tasks:
 
-    - name: Mount Windows 11 ISO from C:\ios
+    - name: Mount ISO from C:\ios\Win11.iso
       win_shell: |
-        $isoPath = "C:\ios\Win11.iso"
-        $iso = Mount-DiskImage -ImagePath $isoPath -PassThru
+        $iso = Mount-DiskImage -ImagePath "C:\ios\Win11.iso" -PassThru
         $driveLetter = ($iso | Get-Volume).DriveLetter + ":"
         echo $driveLetter
       register: iso_mount
 
-    - name: Get ISO drive letter
+    - name: Extract drive letter
       set_fact:
         iso_drive: "{{ iso_mount.stdout_lines[-1] }}"
 
-    - name: Copy Windows 11 setup files from ISO
+    - name: Copy setup files from ISO
       win_shell: |
-        $source = "{{ iso_drive }}\"
+        $source = '{{ iso_drive }}\\'
         $destination = "C:\Temp\Win11Setup"
         New-Item -ItemType Directory -Path $destination -Force
         Copy-Item -Path "$source*" -Destination $destination -Recurse -Force
 
-    - name: Dismount ISO after copy
+    - name: Dismount ISO
       win_shell: |
         Dismount-DiskImage -ImagePath "C:\ios\Win11.iso"
 
-    - name: Start Windows 11 upgrade silently
+    - name: Start Windows 11 upgrade
       win_shell: |
         Start-Process "C:\Temp\Win11Setup\setup.exe" -ArgumentList "/auto upgrade /quiet /noreboot /dynamicupdate disable" -Wait
 
-    - name: Reboot system after upgrade
+    - name: Reboot after upgrade
       win_reboot:
         reboot_timeout: 3600
