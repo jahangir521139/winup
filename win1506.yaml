@@ -1,5 +1,4 @@
 ---
----
 - name: Upgrade Windows 10 to 11 using local ISO (C:\ios)
   hosts: windows
   gather_facts: no
