@@ -1,9 +1,19 @@
 ---
-- name: Verify WinRM service is running
-  host: all
-  win_service:
-    name: WinRM
-    state: started
-  register: winrm_service_result
-  failed_when: winrm_service_result.status != 'running'
-  changed_when: false
+- name: In-place upgrade from Windows 10 to Windows 11
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Mount Windows 11 ISO
+      win_command: |
+        PowerShell Mount-DiskImage -ImagePath "C:\\ios\\Win11.iso"
+
+    - name: Start Windows 11 setup silently
+      win_command: |
+        E:\setup.exe /auto upgrade /quiet /noreboot /compat IgnoreWarning
+      args:
+        chdir: E:\
+
+    - name: Reboot the machine to complete upgrade
+      win_reboot:
+        msg: "Rebooting to complete Windows 11 upgrade"
+        reboot_timeout: 3600
