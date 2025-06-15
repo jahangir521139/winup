@@ -9,9 +9,9 @@
 
     - name: Start Windows 11 setup silently
       win_command: |
-        D:\setup.exe /auto upgrade /quiet /noreboot /compat IgnoreWarning
+        E:\setup.exe /auto upgrade /quiet /noreboot /compat IgnoreWarning
       args:
-        chdir: D:\
+        chdir: E:\
 
     - name: Reboot the machine to complete upgrade
       win_reboot:
